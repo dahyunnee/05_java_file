@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 //# 파일 컨트롤러[1단계] : 벡터
 
-//2021.03.08 21:26 ~ 
+//2021.03.08 21:26 ~ 22:00
 public class FileEx06_문제 {
 	
 	public static void main(String[] args) {
@@ -119,15 +119,29 @@ public class FileEx06_문제 {
 				BufferedReader br = null;
 				
 				try {
+					
 					fw= new FileReader(file);
 					br = new BufferedReader(fw);
 					
-					String data = br.readLine();
+					String data;
+					
+					while(true) {
+						
+						data = br.readLine();
+						
+						if (data == null) break;
+						System.out.println(data);
+					}
 					
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}finally {
+					
+					try {br.close();} catch (IOException e) {e.printStackTrace();}
+					try {fw.close();} catch (IOException e) {e.printStackTrace();}
+					
 				}
 				
 			
