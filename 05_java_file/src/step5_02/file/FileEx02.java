@@ -45,7 +45,7 @@ public class FileEx02 {
 				}
 				
 				
-			} catch (Exception e) {
+			} catch (Exception e) {			//FileNotFoundException 대신 그냥 Exception으로 고치기
 				
 				e.printStackTrace();
 				

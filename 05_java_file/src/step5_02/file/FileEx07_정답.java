@@ -1,11 +1,17 @@
 package step5_02.file;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 //# 파일 컨트롤러[2단계] : ATM
 
-//2021.03.09 21:28 ~ 
+//2021.03.09 21:28 ~ 21:58
 public class FileEx07_정답 {
 	
 	public static void main(String[] args) {
@@ -21,6 +27,12 @@ public class FileEx07_정답 {
 		int[]  moneys = new int[size];
 		
 		String fileName = "atm.txt";
+		
+		for (int i = 0; i < accs.length; i++) {
+			
+			accs[i] = "";
+			pws[i] = "";
+		}
 		
 		while(true) {
 			
@@ -93,7 +105,7 @@ public class FileEx07_정답 {
 				System.out.print("ID 입력 : ");
 				String getId = scan.next();
 				
-				System.out.println("PW 입력 : ");
+				System.out.print("PW 입력 : ");
 				String getPw = scan.next();
 				
 				for (int i = 0; i < accs.length; i++) {
@@ -185,10 +197,108 @@ public class FileEx07_정답 {
 			else if (sel == 6) {
 				
 				
+				if (identifier == -1 ) {
+					
+					System.out.println("로그인을 먼저 하세요.");
+					continue;
+					
+				}
+				
+				System.out.print("출금할 금액 : ");
+				int getMoney = scan.nextInt();
+				
+				if (getMoney > moneys[identifier]) {
+					
+					System.out.println("잔액 부족");
+					continue;
+				}
+				
+				moneys[identifier] -= getMoney;
+				
+				System.out.println("출금 성공");
 			}
-			else if (sel == 8) {}
-			else if (sel == 9) {}
-			else if (sel == 10) {}
+			else if (sel == 8) {
+				
+				
+				if ( identifier == -1 ) {
+					
+					System.out.println("로그인을 먼저 하세요.");
+					continue;
+				}
+				System.out.println("잔액은 " + moneys[identifier] + "원 입니다. ");
+			}
+			else if (sel == 9) {
+				
+				FileWriter fw = null;
+				try {
+					
+					fw = new FileWriter(fileName);
+					
+					String str = "";
+					
+					
+					str += accs[identifier] + "의 잔액은 " + moneys[identifier]
+							+ "원 입니다.";
+					
+					fw.write(str);
+					
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally {
+					
+					try {
+						fw.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				
+				
+			}
+			else if (sel == 10) {
+				
+				File file = new File(fileName);
+				FileReader fr = null;
+				BufferedReader br = null;
+				if (file.exists()) {
+					
+					
+					try {
+						
+						fr = new FileReader(file);
+						br = new BufferedReader(fr);
+						
+						String str = "";
+						
+						while(true) {
+							
+						
+							str = br.readLine();
+						
+							if (str == null) break;
+							
+							System.out.println(str);
+						}
+						
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						
+					} finally {
+						
+						try {br.close();} catch (IOException e) {e.printStackTrace();}
+						try {fr.close();} catch (IOException e) {e.printStackTrace();}
+					}
+					
+				}
+				
+				
+			}
 			else if (sel == 0) {
 				break;
 			}

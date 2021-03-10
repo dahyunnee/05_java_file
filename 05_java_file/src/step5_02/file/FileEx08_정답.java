@@ -1,5 +1,6 @@
 package step5_02.file;
 
+//2021.03.10 20:15 ~ 
 
 import java.util.Scanner;
 
@@ -37,9 +38,52 @@ public class FileEx08_정답 {
 			System.out.print("메뉴 선택 : ");
 			int sel = scan.nextInt();
 			
-			if		(sel == 1) {}
-			else if (sel == 2) {}
-			else if (sel == 3) {}
+			if		(sel == 1) {
+				
+				System.out.print(" [ ID ] : ");
+				String getId = scan.next();
+				
+				for (int i = 0; i < ids.length; i++) {
+					
+					if (ids[i].equals(getId)) {
+						
+						System.out.println(" [ PW ] : ");
+						String getPw = scan.next();
+						
+						if ( pws[i].equals(getPw) ) {
+							
+							System.out.println("로그인 성공");
+							log = i;
+						}
+						
+						else {
+							
+							System.out.println("비밀번호 오류");
+						}
+						
+						break;
+						
+					}
+					
+					if (i == ids.length - 1 ) {
+						
+						System.out.println("존재하지 않는 ID입니다.");
+					}
+					
+				}
+				
+				
+			}
+			else if (sel == 2) {
+				
+				log = -1;
+				System.out.println("로그아웃 성공");
+				
+			}
+			else if (sel == 3) {
+				
+				
+			}
 			else if (sel == 4) {}
 			else if (sel == 5) {}
 			else if (sel == 6) {}
@@ -47,6 +91,8 @@ public class FileEx08_정답 {
 				System.out.println("프로그램 종료");
 				break;
 			}
+			
+			System.out.println();
 			
 		}
 		
