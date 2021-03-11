@@ -1,6 +1,13 @@
 package step5_02.file;
 
-//2021.03.10 20:15 ~ 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+//2021.03.10 20:15 ~ 20:53
 
 import java.util.Scanner;
 
@@ -23,6 +30,8 @@ public class FileEx08_정답 {
 		
 		int count = 0;
 		int log = -1;
+		
+		String str = "";
 		
 		while (true) {
 			
@@ -47,7 +56,7 @@ public class FileEx08_정답 {
 					
 					if (ids[i].equals(getId)) {
 						
-						System.out.println(" [ PW ] : ");
+						System.out.print(" [ PW ] : ");
 						String getPw = scan.next();
 						
 						if ( pws[i].equals(getPw) ) {
@@ -76,17 +85,156 @@ public class FileEx08_정답 {
 			}
 			else if (sel == 2) {
 				
+				str = "";
 				log = -1;
 				System.out.println("로그아웃 성공");
 				
 			}
 			else if (sel == 3) {
 				
+				if (log == -1) {
+					
+					System.out.println("로그인을 먼저 하세요");
+					continue;
+				}
+				
+			
+				
+				for (int i = 0; i < ids.length; i++) {
+					
+					if ( i == log) System.out.println(ids[i] + " 님 : " + str);
+					else System.out.println(ids[i] + "님 ");
+				}
+				
+				System.out.println("===== 품목 =====");
+				for (int i = 0; i < items.length; i++) {
+					
+					System.out.println((i+1) + " : " + items[i] );
+				}
+				
+				System.out.println();
+				System.out.print("상품 선택 : ");
+				int getitemNumber = scan.nextInt();
+				
+				if ( getitemNumber <= 0 || getitemNumber > items.length) {
+					
+					System.out.println("존재하지 않는 품목입니다.");
+					System.out.println();
+					
+					continue;
+				}
+				
+				
+				if (count < MAX_SIZE) {
+					
+					str += items[getitemNumber - 1] + " / ";
+					
+				}
+				
+				jang[count][0] = Integer.parseInt(pws[log]);
+				jang[count][1] = getitemNumber - 1;
+						
+				count ++;
 				
 			}
-			else if (sel == 4) {}
-			else if (sel == 5) {}
-			else if (sel == 6) {}
+			else if (sel == 4) {
+				
+				int sumofItems = 0;
+				
+				if (log == -1) {
+					
+					System.out.println("로그인을 먼저 하세요");
+					continue;
+				}
+				
+				for (int i = 0; i < jang.length; i++) {
+					
+					if (jang[i][0] == Integer.parseInt(pws[log])) {
+						
+						int num = jang[i][1];
+						
+						System.out.println((sumofItems++) + ". " + items[num]);
+					}
+				}
+				
+				
+			}
+			else if (sel == 5) {
+				
+				FileWriter fw = null;
+				
+				
+				try {
+					
+					fw = new FileWriter(fileName);
+					
+					String string = "";
+					
+					for (int i = 0; i < jang.length; i++) {
+						
+						string += jang[i][0] + " / " + jang[i][1] + "\n";
+						
+						
+					}
+					
+					fw.write(string);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally {
+					
+					try {
+						fw.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			else if (sel == 6) {
+				
+				
+				File file = new File(fileName);
+				FileReader fr = null;
+				BufferedReader br = null;
+				
+				try {
+					
+					fr = new FileReader(file);
+					br = new BufferedReader(fr);
+					
+					while(true) {
+						
+						String s = "";
+						
+						s = br.readLine();
+						
+						if ( s == null) break;
+						System.out.println(s);
+						
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally {
+					
+					try {
+						br.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						fr.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
 			else if (sel == 0) {
 				System.out.println("프로그램 종료");
 				break;
